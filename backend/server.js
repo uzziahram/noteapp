@@ -3,8 +3,6 @@ import db from './db.js';
 import cors from 'cors';
 import { nanoid } from 'nanoid';
 
-
-
 const app = express();
 const PORT = 3000;
 
@@ -77,30 +75,39 @@ app.delete("/api/notes/:id" , (req, res) => {
 app.patch("/api/notes/:id" ,(req, res) => {
     const noteID = req.params.id
     const { note_title, note_content, note_status } = req.body
+    
+    const fields = []
+    const values = []
 
-    //finds the object and outputs it
-    db.query(`SELECT * FROM note WHERE id = ?`,[noteID], (err, result) => {
+    if(note_title) {
+        fields.push("title = ?") 
+        values.push(note_title )
+    } 
+    if(note_content) {
+        fields.push("content = ?")
+        values.push(note_content)
+    }
+    if(note_status) {
+        fields.push("isCompleted = ?")
+        values.push(note_status)
+    }
+
+    values.push(noteID)
+
+    const mysqlQuery = `UPDATE note SET ${fields.join(',')} WHERE id = ?`
+
+    // where the actual updating really happens
+    db.query(mysqlQuery, values, (err, result) => {
         if(err) return res.status(500).json({error: err})
-
-        if (result.length === 0) {
-            return res.status(404).json({ message: "Note not found" });
-        }
-        res.json(result)
     } )
 
 
+    //displays the updated note
+    db.query(`SELECT * FROM note WHERE id = ?`,[noteID], (err, result) => {
+        if(err) return res.status(500).json({error: err})
 
-    // where the actual updating really happens
-    // db.query(
-    //     'UPDATE note SET ',
-    //     [noteID], (err, result) => {
-    //     if(err) return res.status(500).json({error: err})
-
-    //     if (result.length === 0) {
-    //         return res.status(404).json({ message: "Note not found" });
-    //     }
-    //     res.json(result)
-    // } )
+        res.json({ message: "Note updated Succesfully", updated_note: result })
+    } )
 
 })
 
