@@ -1,40 +1,35 @@
 
 <template>
-	<div class="h-screen flex flex-col justify-center items-center">
-		<div class="w-8/12 h-80 flex flex-col bg-zinc-800">
-			<h1 class="p-4 self-center font-bold">Notes App</h1>
-				<div class="self-center w-5/12 flex flex-col">
-					<input type="text" v-model="note_title" class="input w-full b-" placeholder="Title" />
-					<textarea class="textarea w-full mb-5" v-model="note_content" placeholder="Bio"></textarea>
-					<button class="bg-zinc-900 h-10 cursor-pointer" @click="test">Create</button>
-				</div>	
-		</div>	
+<div class="h-screen flex flex-col items-center">
+	<!-- Form-->
+	<div class="w-8/12 flex flex-col bg-zinc-800 p-10">
+		<h1 class="p-4 self-center font-bold">Notes App</h1>
+			<div class="self-center w-5/12 flex flex-col">
+				<input type="text" v-model="note_title" class="input w-full b-" placeholder="Title" />
+				<textarea class="textarea w-full mb-5" v-model="note_content" placeholder="Bio"></textarea>
+				<button class="bg-zinc-900 h-10 cursor-pointer" @click="test">Create</button>
+			</div>	
+	</div>	
 
+	<!-- list -->
+	<div class="w-8/12 flex bg-zinc-800 justify-center">
 
-		<div class="w-8/12 h-5/12 flex bg-zinc-800 justify-center">
-			<!-- <ul>
-				<li v-for="note in notes" :key="note.id">
-					<h1> {{ note.note_title }}</h1>
-					<p> {{ note.content }} </p>
-				</li> 
-
-			</ul> -->
-
-			<div class="w-10/12 h-80 flex flex-col items-center font-mono">
-				<ul v-if="notes && notes.length" class="flex flex-col">
-					<li v-for="note in notes" :key="note.id" class="m-3">
-						<h2> {{ note.title }} </h2>
-						<h3> {{ note.content }} </h3>
-					</li>
-				</ul>
-				<div v-else class="self-center-safe font-mono">
-					<p>walay sulod bro</p>
-				</div>
+		<div class="w-10/12  flex flex-col items-center font-mono">
+			<ul v-if="notes && notes.length" class="flex flex-col">
+				<li v-for="note in notes" :key="note.id" class="m-3">
+					<h2> {{ note.title }} </h2>
+					<h3> {{ note.content }} </h3>
+				</li>
+			</ul>
+			<div v-else class="self-center-safe font-mono">
+				<p>walay sulod bro</p>
 			</div>
-				
 		</div>
+			
 	</div>
+</div>
 </template>
+
 
 <script setup>
 import axios from 'axios';
