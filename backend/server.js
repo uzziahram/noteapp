@@ -91,16 +91,16 @@ app.patch("/api/notes/:id" ,(req, res) => {
 
 
     // where the actual updating really happens
-    db.query(
-        'UPDATE note SET ',
-        [noteID], (err, result) => {
-        if(err) return res.status(500).json({error: err})
+    // db.query(
+    //     'UPDATE note SET ',
+    //     [noteID], (err, result) => {
+    //     if(err) return res.status(500).json({error: err})
 
-        if (result.length === 0) {
-            return res.status(404).json({ message: "Note not found" });
-        }
-        res.json(result)
-    } )
+    //     if (result.length === 0) {
+    //         return res.status(404).json({ message: "Note not found" });
+    //     }
+    //     res.json(result)
+    // } )
 
 })
 
