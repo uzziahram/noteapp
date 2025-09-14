@@ -51,6 +51,8 @@ const fetchData = async () => {
 	
 }
 
+
+// dev rani
 class note {
 	constructor(title, content,id){
 		this.title = title
